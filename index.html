@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Teste - Você Passou?</title>
-	<style>
+  <style>
     * {
       padding: 0;
       margin: 0;
@@ -13,23 +13,32 @@
     }
 
     html, body {
-      background-color: #1f1f1f;
       height: 100%;
       width: 100%;
     }
 
     header {
-      background-color: #2b2b2b;
-      color: #f1f1f1;
       padding: 20px;
       text-align: center;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      transition: background 0.3s ease;
+    }
+
+    header .titulo {
+      margin-top: 20px;
+      flex-basis: 100%;
+      transition: background 0.3s ease;
     }
 
     h1 {
       font-size: 24px;
       font-weight: normal;
       letter-spacing: 1px;
+      transition: background 0.3s ease;
     }
 
     .container {
@@ -37,67 +46,68 @@
       justify-content: center;
       align-items: center;
       padding: 50px 20px;
+      transition: background 0.3s ease;
     }
 
     .box {
-      background-color: #2b2b2b;
       border-radius: 12px;
       width: 100%;
       max-width: 400px;
       padding: 30px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: background 0.3s ease;
     }
 
     h4 {
-      color: #ccc;
       text-align: center;
       margin-bottom: 30px;
       font-weight: normal;
+      transition: background 0.3s ease;
     }
 
-    h5{
-      color: lightgray;
+    h5 {
       margin-bottom: 8px;
       text-align: left;
       font-size: 15px;
+      transition: background 0.3s ease;
     }
 
-		#Average {
-		  margin-top: 30px;
-		  padding: 15px;
-		  border-radius: 10px;
-		  background-color: #333;
-		  color: #00ff88;
-		  font-size: 18px;
-		  font-weight: bold;
-		  text-align: center;
-		  box-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
-		  transition: all 0.3s ease;
-		}
+    #Average {
+      margin-top: 30px;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      transition: all 0.3s ease;
+      transition: background 0.3s ease;
+    }
 
     form {
       display: flex;
       flex-direction: column;
       gap: 20px;
+      transition: background 0.3s ease;
     }
 
     input {
       padding: 10px 12px;
       border: 1px solid #444;
       border-radius: 6px;
-      background: #1f1f1f;
-      color: #eee;
       font-size: 15px;
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      transition: background 0.3s ease;
     }
 
     input:focus {
       border-color: #888;
       box-shadow: 0 0 5px #888;
+      transition: background 0.3s ease;
     }
 
     input::placeholder {
       color: #777;
+      transition: background 0.3s ease;
     }
 
     hr {
@@ -105,96 +115,164 @@
       margin: 25px auto;
       border: none;
       height: 3px;
-      background-color: #888;
       border-radius: 5px;
+      transition: background 0.3s ease;
     }
 
     .btn {
-      margin-top: 20px;
+      margin-top: 10px;
       padding: 10px;
       font-size: 16px;
-      background-color: #444;
-      color: #fff;
       border: none;
       border-radius: 6px;
       cursor: pointer;
       transition: background 0.3s ease;
     }
 
-    .btn:hover {
+    /* Dark Theme */
+    .dark {
+      background-color: #2b2b2b;
+      color: #f1f1f1;
+    }
+
+    .dark input {
+      background-color: #1f1f1f;
+      color: #eee;
+      border-color: #444;
+    }
+
+    .dark #Average {
+      background-color: #333;
+      color: #00ff88;
+      box-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
+    }
+
+    .dark .btn {
+      background-color: #444;
+      color: #fff;
+    }
+
+    .dark .btn:hover {
       background-color: #666;
+    }
+
+    /* Light Theme */
+    .light {
+      background-color: #fff;
+      color: #333;
+    }
+
+    .light input {
+      background-color: #fff;
+      color: #000;
+      border-color: #ccc;
+    }
+
+    .light #Average {
+      background-color: #eee;
+      color: #006600;
+      box-shadow: 0 0 12px rgba(0, 102, 0, 0.4);
+    }
+
+    .light .btn {
+      background-color: #ccc;
+      color: #000;
+    }
+
+    .light .btn:hover {
+      background-color: #aaa;
     }
   </style>
 </head>
-<body>
-<script>
-  const media = 6;
-  const freq_min = 75;
+<body class="dark">
+  <script>
+    let TotalAverage = 0;
+    let TotalFrequency = 0;
+    const media = 6;
+    const freq_min = 75;
 
-  let TotalAverage = 0;
-  let TotalFrequency = 0;
-
-  function CheckAverage() {
-    let trimestre1 = parseFloat(document.getElementById('tri1').value);
-    let trimestre2 = parseFloat(document.getElementById('tri2').value);
-    let trimestre3 = parseFloat(document.getElementById('tri3').value);
-
-    TotalAverage = (trimestre1 + trimestre2 + trimestre3) / 3;
-
-    if (TotalAverage >= media) {
-      document.getElementById('Average').innerText = "Você Passou pela Média!";
-    } else {
-      document.getElementById('Average').innerText = "Você Não Passou pela Média!";
+    function CheckAverage() {
+      const trimestre1 = parseFloat(document.getElementById('tri1').value);
+      const trimestre2 = parseFloat(document.getElementById('tri2').value);
+      const trimestre3 = parseFloat(document.getElementById('tri3').value);
+      TotalAverage = (trimestre1 + trimestre2 + trimestre3) / 3;
     }
-  }
 
-  function CheckFrequency() {
-    let frequencia1 = parseFloat(document.getElementById('freq1').value);
-    let frequencia2 = parseFloat(document.getElementById('freq2').value);
-    let frequencia3 = parseFloat(document.getElementById('freq3').value);
-
-    TotalFrequency = (frequencia1 + frequencia2 + frequencia3) / 3;
-  }
-
-  function CheckIfPassed() {
-    if (TotalAverage >= media && TotalFrequency >= freq_min) {
-      document.getElementById('Average').innerText = "Você Passou De Ano!";
-    } else {
-      document.getElementById('Average').innerText = "Você Não Passou De Ano!";
+    function CheckFrequency() {
+      const frequencia1 = parseFloat(document.getElementById('freq1').value);
+      const frequencia2 = parseFloat(document.getElementById('freq2').value);
+      const frequencia3 = parseFloat(document.getElementById('freq3').value);
+      TotalFrequency = (frequencia1 + frequencia2 + frequencia3) / 3;
     }
-  }
-</script>
 
-<header>
-  <h1 class="titulo">Veja se você passou de ano!</h1>
-</header>
+    function CheckIfPassed() {
+      if (TotalAverage >= media && TotalFrequency >= freq_min) {
+        document.getElementById('Average').innerText = "Você Passou De Ano!";
+      } else {
+        document.getElementById('Average').innerText = "Você Não Passou De Ano!";
+      }
+    }
 
-<div class="container">
-  <div class="box">
-    <h4>Preencha os dados pedidos abaixo:</h4>
-    <form onsubmit="event.preventDefault(); CheckAverage(); CheckFrequency(); CheckIfPassed();">
-      <div>
-        <h5>Nota do 1º trimestre e frequência sem %:</h5>
-        <input id="tri1" type="number" placeholder="Digite a nota..." required>
-        <input type="number" id="freq1" placeholder="Digite a frequência..." required>
-      </div>
+    function ChangeToLight() {
+  const ids = ['header', 'h1', 'h4', 'h5', 'tri1', 'freq1', 'tri2', 'freq2', 'tri3', 'freq3', 'Average', 'box'];
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.remove('dark');
+      el.classList.add('light');
+    }
+  });
+  document.body.classList.remove('dark');
+  document.body.classList.add('light');
+}
 
-      <div>
-        <h5>Nota do 2º trimestre e frequência sem %:</h5>
-        <input id="tri2" type="number" placeholder="Digite a nota..." required>
-        <input type="number" id="freq2" placeholder="Digite a frequência..." required>
-      </div>
+function ChangeToDark() {
+  const ids = ['header', 'h1', 'h4', 'h5', 'tri1', 'freq1', 'tri2', 'freq2', 'tri3', 'freq3', 'Average', 'box'];
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.remove('light');
+      el.classList.add('dark');
+    }
+  });
+  document.body.classList.remove('light');
+  document.body.classList.add('dark');
+}
 
-      <div>
-        <h5>Nota do 3º trimestre e frequência sem %:</h5>
-        <input id="tri3" type="number" placeholder="Digite a nota..." required>
-        <input type="number" id="freq3" placeholder="Digite a frequência..." required>
-      </div>
+  </script>
 
-      <button type="submit" class="btn">Ver resultado</button>
-    </form>
-    <p id="Average"></p>
+  <header id="header" class="dark">
+    <h1 class="titulo" id="h1">Veja se você passou de ano!</h1>
+    <button class="btn" onclick="ChangeToLight()">Claro</button>
+    <button class="btn" onclick="ChangeToDark()">Escuro</button>
+  </header>
+
+  <div class="container">
+    <div class="box dark" id="box">
+      <h4 id="h4">Preencha os dados pedidos abaixo:</h4>
+      <form onsubmit="event.preventDefault(); CheckAverage(); CheckFrequency(); CheckIfPassed();">
+        <div>
+          <h5 id="h5">Nota do 1º trimestre e frequência sem %:</h5>
+          <input id="tri1" type="number" placeholder="Digite a nota..." required>
+          <input id="freq1" type="number" placeholder="Digite a frequência..." required>
+        </div>
+
+        <div>
+          <h5>Nota do 2º trimestre e frequência sem %:</h5>
+          <input id="tri2" type="number" placeholder="Digite a nota..." required>
+          <input id="freq2" type="number" placeholder="Digite a frequência..." required>
+        </div>
+
+        <div>
+          <h5>Nota do 3º trimestre e frequência sem %:</h5>
+          <input id="tri3" type="number" placeholder="Digite a nota..." required>
+          <input id="freq3" type="number" placeholder="Digite a frequência..." required>
+        </div>
+
+        <button type="submit" class="btn">Ver resultado</button>
+      </form>
+      <p id="Average"></p>
+    </div>
   </div>
-</div>
 </body>
-  </html>
+</html>
